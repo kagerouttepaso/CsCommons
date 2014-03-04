@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\BytesControlExtensions.cs" />
+    <Compile Include="Extensions\CommonExtensions.cs" />
     <Compile Include="Form\AppSettings.cs" />
     <Compile Include="DesignPattern\Observer.cs" />
     <Compile Include="Program.cs" />
