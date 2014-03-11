@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 
 //下記のコードのprojectnameをリネームする
 //namespace projectname.Properties{
-//	[System.Configuration.SettingsProvider(typeof(My_settings.ConfigFileSettingsProvider))]
+//	[System.Configuration.SettingsProvider(typeof(Commons.Settings.ConfigFileSettingsProvider))]
 //	internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
 //	}
 //}
 
-namespace Commons.Form {
+namespace Commons.Settings{
 
 	/// <summary>
 	/// Protraのconfディレクトリに設定を保存するための設定プロバイダー
 	/// </summary>
 	public class ConfigFileSettingsProvider : SettingsProvider {
-		private readonly string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), Application.ProductName + ".config");
+        private readonly string configFile = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName) + ".config");
 
 		/// <summary>
 		/// プロバイダーを初期化する。
@@ -33,8 +32,8 @@ namespace Commons.Form {
 		/// 現在実行中のアプリケーションの名前を取得または設定する。
 		/// </summary>
 		public override string ApplicationName {
-			get { return Application.ProductName; }
-			set { }
+            get { return AppDomain.CurrentDomain.FriendlyName; }
+            set { }
 		}
 
 		/// <summary>
