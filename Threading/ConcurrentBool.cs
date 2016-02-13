@@ -6,10 +6,19 @@ namespace Commons.Threading
     /// スレッドセーフなBool値
     /// </summary>
     public class ConcurrentBool{
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="b">初期値</param>
         public ConcurrentBool(bool b):this()
         {
             _flag = b;
         }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public ConcurrentBool() { }
 
         private ReaderWriterLockSlim _flagLock;

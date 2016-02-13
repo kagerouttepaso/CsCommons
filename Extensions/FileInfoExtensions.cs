@@ -17,6 +17,7 @@ namespace Commons.Extensions
         /// </summary>
         /// <param name="FileInfo">ファイルインフォ</param>
         /// <param name="SerchText">検索文字列</param>
+        /// <param name="Comparison">比較のオプション</param>
         /// <returns>ヒットした行番号(ヒットしない場合は-1)</returns>
         public static async Task<int> IsInsideTextAsync(this FileInfo FileInfo, string SerchText, StringComparison Comparison = StringComparison.Ordinal)
         {

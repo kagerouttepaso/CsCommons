@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 
 namespace Commons.Extensions
 {
-    public static class ReaderWriterExtensions
+    /// <summary>
+    /// ReaderWriterSlim用の拡張メソッド
+    /// </summary>
+    public static class ReaderWriterSlimExtensions
     {
         /// <summary>
         /// スレッドセーフな値書込
