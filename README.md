@@ -19,5 +19,7 @@ Gitリポジトリのサブモジュールとして使用してください。
 
 ライセンス
 ----------
-このリポジトリのライセンスはすべてMITライセンスです。
-ライセンス条文は[LICENSE](LICENSE)を確認して下さい。
+このリポジトリのライセンスはCC0です。
+
+The license for this project is CC0
+http://creativecommons.org/publicdomain/zero/1.0/legalcode
