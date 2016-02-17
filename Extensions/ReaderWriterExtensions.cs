@@ -91,6 +91,34 @@ namespace Commons.Extensions
         }
 
         /// <summary>
+        /// ReadLockを掛けてメソッド実行
+        /// </summary>
+        /// <param name="rwl"></param>
+        /// <param name="method"></param>
+        public static T ReadMethod<T>(this ReaderWriterLockSlim rwl, Func<T> method)
+        {
+            rwl.EnterReadLock();
+            try
+            {
+                return method();
+            }
+            finally
+            {
+                rwl.ExitReadLock();
+            }
+        }
+
+        /// <summary>
+        /// ReadLockを掛けてメソッド実行(非同期)
+        /// </summary>
+        /// <param name="rwl"></param>
+        /// <param name="method"></param>
+        public static async Task<T> ReadMethodAsync<T>(this ReaderWriterLockSlim rwl, Func<T> method)
+        {
+            return await Task.Factory.StartNew(() => ReadMethod(rwl, method));
+        }
+
+        /// <summary>
         /// WriteLockを掛けてメソッド実行
         /// </summary>
         /// <param name="rwl"></param>
@@ -119,12 +147,40 @@ namespace Commons.Extensions
         }
 
         /// <summary>
+        /// WriteLockを掛けてメソッド実行
+        /// </summary>
+        /// <param name="rwl"></param>
+        /// <param name="method"></param>
+        public static T WriteMethod<T>(this ReaderWriterLockSlim rwl, Func<T> method)
+        {
+            rwl.EnterWriteLock();
+            try
+            {
+                return method();
+            }
+            finally
+            {
+                rwl.ExitWriteLock();
+            }
+        }
+
+        /// <summary>
+        /// WriteLockを掛けてメソッド実行(非同期)
+        /// </summary>
+        /// <param name="rwl"></param>
+        /// <param name="method"></param>
+        public static async Task<T> WriteMethodAsync<T>(this ReaderWriterLockSlim rwl, Func<T> method)
+        {
+            return await Task.Factory.StartNew(() => WriteMethod(rwl, method));
+        }
+
+        /// <summary>
         /// ロックを掛けて比較の後メソッドを実行
         /// </summary>
         /// <param name="rwl"></param>
         /// <param name="Compare"></param>
         /// <param name="method"></param>
-        public static void UpgradeableReadMethod(this ReaderWriterLockSlim rwl, Func<bool> Compare, Action method)
+        public static bool UpgradeableReadMethod(this ReaderWriterLockSlim rwl, Func<bool> Compare, Action method)
         {
             rwl.EnterUpgradeableReadLock();
             try
@@ -140,6 +196,10 @@ namespace Commons.Extensions
                     {
                         rwl.ExitWriteLock();
                     }
+                    return true;
+                }
+                else {
+                    return false;
                 }
             }
             finally
@@ -154,9 +214,9 @@ namespace Commons.Extensions
         /// <param name="rwl"></param>
         /// <param name="compare"></param>
         /// <param name="method"></param>
-        public static async Task UpgradeableReadMethodAsync(this ReaderWriterLockSlim rwl, Func<bool> compare, Action method)
+        public static async Task<bool> UpgradeableReadMethodAsync(this ReaderWriterLockSlim rwl, Func<bool> compare, Action method)
         {
-            await Task.Factory.StartNew(() => UpgradeableReadMethod(rwl, compare, method));
+            return await Task.Factory.StartNew(() => UpgradeableReadMethod(rwl, compare, method));
         }
     }
 }
